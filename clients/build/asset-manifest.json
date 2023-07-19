@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.da5066b5.css",
+    "main.js": "/static/js/main.96fcd401.js",
+    "static/media/img4.jpg": "/static/media/img4.ce7093baa282e7db1e57.jpg",
+    "static/media/travelimg.jpg": "/static/media/travelimg.df36a063a93e76c09a8b.jpg",
+    "static/media/img2.jpg": "/static/media/img2.1bdf6f95133b46c556af.jpg",
+    "static/media/tertius.png": "/static/media/tertius.beaac96af88c259dccd0.png",
+    "static/media/img1.jpg": "/static/media/img1.b5bf72d729ace4617683.jpg",
+    "static/media/rent4.jpg": "/static/media/rent4.101a4f70a044db34b4ab.jpg",
+    "static/media/rent2.jpg": "/static/media/rent2.d28a57088f528fc13e04.jpg",
+    "static/media/rent1.jpg": "/static/media/rent1.7007737ee6cf70edee3f.jpg",
+    "static/media/rent3.jpg": "/static/media/rent3.f2142f5a86eface60145.jpg",
+    "static/media/baizer.jpg": "/static/media/baizer.58820b6798e7c95279fc.jpg",
+    "static/media/img3.jpg": "/static/media/img3.d11dbf8483597cf01e03.jpg",
+    "static/media/toussaint.jpeg": "/static/media/toussaint.54617bc2f7fd8c39b5c9.jpeg",
+    "index.html": "/index.html",
+    "static/media/curve-up.svg": "/static/media/curve-up.2fb728342b7cfe20f2347ab0154a1b3f.svg",
+    "main.da5066b5.css.map": "/static/css/main.da5066b5.css.map",
+    "main.96fcd401.js.map": "/static/js/main.96fcd401.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.da5066b5.css",
+    "static/js/main.96fcd401.js"
+  ]
+}

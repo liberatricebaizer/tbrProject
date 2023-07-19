@@ -1,0 +1,8 @@
+.section__ride {
+}
+
+.map {
+  display: flex;
+  /* background-color: #20c997; */
+  min-height: 90vh;
+}
