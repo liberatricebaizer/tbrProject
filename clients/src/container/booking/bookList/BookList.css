@@ -273,6 +273,26 @@ textarea {
   display: flex;
   gap: 10px;
 }
+.book-now {
+  margin-top: 1rem;
+}
+.book-cta {
+  display: inline-block;
+
+  width: 100%;
+  padding: 1.5rem 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #20c997;
+  background-color: #20c997;
+  color: #fff;
+  font-size: 2rem;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.book-cta:hover {
+  opacity: 70%;
+}
 
 .iconF {
   width: 32px;

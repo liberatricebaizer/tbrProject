@@ -142,7 +142,9 @@ const Rents = () => {
             </div>
 
             <div className="rent-now">
-              <button className="rent-cta">Rent Now</button>
+              <button type="submit" className="rent-cta">
+                Rent Now
+              </button>
             </div>
           </form>
         </div>

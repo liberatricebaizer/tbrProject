@@ -54,9 +54,9 @@
 .input-textarea {
   resize: vertical;
 }
-/* .rent-now {
+.rent-now {
   margin-top: 1rem;
-} */
+}
 .rent-cta {
   display: inline-block;
 
@@ -65,6 +65,7 @@
   border-radius: 0.5rem;
   border: 1px solid #20c997;
   background-color: #20c997;
+  color: #fff;
   font-size: 2rem;
   font-family: inherit;
   font-weight: 500;
