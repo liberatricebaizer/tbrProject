@@ -42,25 +42,41 @@ const Rents = () => {
     e.preventDefault();
     console.log(data);
 
-    const fetchData = await fetch(
-      `${process.env.REACT_APP_SERVER_DOMIN}/uploadRent`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const { name, email, price, mobile, location, description, image } = data;
+    if (name && email && price && mobile && location && description && image) {
+      const fetchData = await fetch(
+        `${process.env.REACT_APP_SERVER_DOMIN}/uploadRent`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
-    const fetchRes = await fetchData.json();
-    console.log(fetchRes);
+      const fetchRes = await fetchData.json();
+      console.log(fetchRes);
+      toast(fetchRes.message);
+      setData(() => {
+        return {
+          name: "",
+          email: "",
+          price: "",
+          mobile: "",
+          location: "",
+          description: "",
+          image: "",
+        };
+      });
+      if (fetchRes.alert) {
+        navigate("/Rents");
+      }
+    } else {
+      toast("Enter required fields");
+    }
 
     // alert(dataRes.message);
-    toast(fetchRes.message);
-    if (fetchRes.alert) {
-      navigate("/Rents");
-    }
   };
   return (
     <Fragment>
@@ -123,28 +139,27 @@ const Rents = () => {
               onChange={handlerOnChange}
             />
 
-            <div className="pick-pic">
-              <label className="label">
-                <input
-                  type={"file"}
-                  multiple
-                  accept="image/*"
-                  id="image"
-                  onChange={handlerUploadfile}
-                />
-                <img
-                  src={data.image ? data.image : UploadImage}
-                  alt=""
-                  className="iconF"
-                />
-                {/* {data.image ? data.image : <FaCamera className="iconF" />} */}
-              </label>
-            </div>
-
             <div className="rent-now">
               <button className="rent-cta">Rent Now</button>
             </div>
           </form>
+          <div className="pick-pic">
+            <label className="label">
+              <input
+                type={"file"}
+                multiple
+                accept="image/*"
+                id="image"
+                onChange={handlerUploadfile}
+              />
+              <img
+                src={data.image ? data.image : UploadImage}
+                alt=""
+                className="iconF"
+              />
+              {/* {data.image ? data.image : <FaCamera className="iconF" />} */}
+            </label>
+          </div>
         </div>
       </div>
     </Fragment>

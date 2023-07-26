@@ -96,8 +96,11 @@ const schemaRent = mongoose.Schema({
 
 const RentModal = mongoose.model("rent", schemaRent);
 
-app.post("/uploadRent", (req, res) => {
+app.post("/uploadRent", async (req, res) => {
   console.log(req.body);
+  const data = await RentModal(req.body);
+  const dataSave = await data.save();
+  res.send({ message: "Upload successfully" });
 });
 app.listen(PORT, () => {
   console.log("server is running at port :" + PORT);
