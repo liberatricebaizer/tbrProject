@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { json } = require("express");
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -72,6 +73,8 @@ app.post("/signin", async (req, res) => {
         alert: true,
         data: dataSend,
       });
+      localStorage.setItem("userInfo", JSON.stringify(dataSend));
+      localStorage.setItem("status", "loggedIn");
     } else {
       res.send({
         message: "Email is not available, please sign up ❌",
@@ -100,7 +103,13 @@ app.post("/uploadRent", async (req, res) => {
   console.log(req.body);
   const data = await RentModal(req.body);
   const dataSave = await data.save();
+  console.log(dataSave);
   res.send({ message: "Upload successfully" });
+});
+
+app.get("/rent", async (req, res) => {
+  const data = await RentModal.find({});
+  res.send(data);
 });
 app.listen(PORT, () => {
   console.log("server is running at port :" + PORT);

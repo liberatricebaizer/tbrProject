@@ -13,7 +13,7 @@ const NavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const userData = useSelector((state) => state.user);
-  console.log(userData);
+  console.log(userData.email);
 
   const dispatch = useDispatch();
 
@@ -40,6 +40,7 @@ const NavBar = () => {
     dispatch(logoutRedux());
     toast("Logout successfully");
   };
+  console.log(process.env.REACT_APP_ADMIN_EMAIL);
 
   return (
     <div className="header">
@@ -111,6 +112,7 @@ const NavBar = () => {
             </div> */}
             {showMenu && (
               <div className="shows">
+                {/* {userData.email === process.env.REACT_APP_ADMIN_EMAIL &&} */}
                 <div className="sign">
                   <div className="sign-in">
                     <NavLink to="/Signin">Message</NavLink>
@@ -127,7 +129,7 @@ const NavBar = () => {
                     <NavLink to="/our home">Help</NavLink>
                   </p>
                   <p onClick={handlerLogout} style={{ cursor: "pointer" }}>
-                    Log out
+                    Log out ({userData.firstName})
                   </p>
                 </div>
               </div>

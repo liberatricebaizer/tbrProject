@@ -25,7 +25,7 @@ function SignUp() {
     confirmPassword: "",
     image: "",
   });
-  console.log(data);
+  // console.log(data);
 
   const enteredFirstNameIsValid = data.firstName.trim() !== "";
   const firstNameIsInvalid =
