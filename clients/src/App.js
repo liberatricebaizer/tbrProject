@@ -9,8 +9,23 @@ import ForgotPassword from "./pages/ForgotPassword";
 import RentForm from "./pages/RentForm";
 import toast, { Toaster } from "react-hot-toast";
 import { Fragment } from "react";
+import { useEffect } from "react";
+import { setDataRent } from "./redux/rentSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  const rentData = useSelector((state) => state.rent);
+  console.log(rentData);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/rent`);
+      const resData = await res.json();
+      console.log(resData);
+      dispatch(setDataRent(resData));
+    })();
+  }, []);
   return (
     <Fragment>
       <Toaster />

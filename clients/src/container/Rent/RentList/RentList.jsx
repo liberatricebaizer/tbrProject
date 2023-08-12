@@ -11,6 +11,9 @@ import Rent6 from "../../../assets/rent2.jpg";
 import Rent7 from "../../../assets/rent3.jpg";
 import Rent8 from "../../../assets/rent4.jpg";
 import Footer from "../../footer/Footer";
+import { useSelector } from "react-redux";
+import RentCard from "../../../components/RentCard";
+
 const RentFilter = [
   {
     profile: `${Rent1}`,
@@ -79,6 +82,14 @@ const RentFilter = [
   },
 ];
 const RentList = () => {
+  const rentData = useSelector((state) => state.rent);
+
+  // Check if rentData is an array before calling slice
+  const rentcartList = Array.isArray(rentData) ? rentData.slice(0, 7) : [];
+
+  // const rentData = useSelector((state) => state.rent);
+  // console.log(rentData);
+  // const rentcartList = rentData.slice(0, 7);
   return (
     <Fragment>
       <div className="booking">
@@ -104,42 +115,58 @@ const RentList = () => {
         </div>
         <div className="booking__content">
           <div className="booking__hotels">
-            {RentFilter.map((rentitems) => (
-              <Fragment>
-                <div className="hotel" key={Math.random().toString()}>
-                  <div className="hotel-img">
-                    <img src={rentitems.profile} alt="Hotel 1" srcset="" />
-                  </div>
-                  <div className="hotel-info">
-                    <div className="hotel-info__heading">
-                      <h3 className="heading__tertiary">
-                        {rentitems.ownName}'s house
-                      </h3>
-                      <span className="highlighted showNew">
-                        {rentitems.type} <FaStar />
-                      </span>
+            {/* {RentFilter.map((rentitems) => ( */}
+            {rentcartList[0] &&
+              rentcartList.map((el) => {
+                return (
+                  <RentCard
+                    name={el.name}
+                    email={el.email}
+                    price={el.price}
+                    mobile={el.mobile}
+                    location={el.location}
+                    description={el.description}
+                    image={el.emage}
+                  />
+                );
+                // <Fragment>
+                {
+                  /* <div className="hotel" key={Math.random().toString()}>
+                    <div className="hotel-img">
+                      <img src={rentitems.profile} alt="Hotel 1" srcset="" />
                     </div>
-                    <div className="hotel-info__content">
-                      <div className="hotel-info__text">
-                        <div className="hotel-info__user">
-                          <span>Rented by {rentitems.ownName}</span>
-                          <span>{rentitems.date}</span>
-                        </div>
-                        <div className="hotel-info__price">
-                          {rentitems.price}
+                    <div className="hotel-info">
+                      <div className="hotel-info__heading">
+                        <h3 className="heading__tertiary">
+                          {rentitems.ownName}'s house
+                        </h3>
+                        <span className="highlighted showNew">
+                          {rentitems.type} <FaStar />
+                        </span>
+                      </div>
+                      <div className="hotel-info__content">
+                        <div className="hotel-info__text">
+                          <div className="hotel-info__user">
+                            <span>Rented by {rentitems.ownName}</span>
+                            <span>{rentitems.date}</span>
+                          </div>
+                          <div className="hotel-info__price">
+                            {rentitems.price}
+                          </div>
                         </div>
                       </div>
+                      <Link
+                        to={rentitems.houseuURL}
+                        style={{ textDecoration: "none", color: "black" }}
+                      >
+                        <div className="hotel-info__cta">Rent Now</div>
+                      </Link>
                     </div>
-                    <Link
-                      to={rentitems.houseuURL}
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      <div className="hotel-info__cta">Rent Now</div>
-                    </Link>
-                  </div>
-                </div>
-              </Fragment>
-            ))}
+                  </div> */
+                }
+                // </Fragment>;
+                // ))}
+              })}
           </div>
         </div>
       </div>

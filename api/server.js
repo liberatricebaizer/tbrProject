@@ -109,7 +109,7 @@ app.post("/uploadRent", async (req, res) => {
 
 app.get("/rent", async (req, res) => {
   const data = await RentModal.find({});
-  res.send(data);
+  res.send(JSON.stringify(data));
 });
 app.listen(PORT, () => {
   console.log("server is running at port :" + PORT);
