@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Rent1 from "../../../../../assets/rent1.jpg";
@@ -13,16 +13,6 @@ import { FaStar, FaHeart, FaShare, FaPlus } from "react-icons/fa";
 import "./HouseProfile.css";
 
 const HouseProfile = () => {
-  const sladeRef = useRef(null);
-  const scroll = (direction) => {
-    // const { current } = sladeRef;
-    // if (direction === "left") {
-    //   current.scrollLeft -= 230;
-    // } else if (scroll === "right") {
-    //   current.scrollLeft += 230;
-    // }
-  };
-
   const RentFilter = [
     {
       profile: `${Rent1}`,

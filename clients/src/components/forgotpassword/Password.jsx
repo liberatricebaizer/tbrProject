@@ -1,7 +1,22 @@
 import React from "react";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 import "./Password.css";
+import { requestPasswordResetLocal } from "../../utility/localDb";
 
 const Password = (props) => {
+  const [email, setEmail] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (!email) {
+      toast("Please enter your email.");
+      return;
+    }
+    const response = requestPasswordResetLocal(email);
+    toast(response.message);
+  };
+
   return (
     <div className="loginContainer">
       <div className="formContainer">
@@ -13,23 +28,27 @@ const Password = (props) => {
           </p>
         </div>
 
-        <div className="formInput">
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            placeholder="Password"
-          />
-        </div>
+        <form onSubmit={submitHandler}>
+          <div className="formInput">
+            <input
+              type="email"
+              id="email"
+              className="form-control"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <button
-          type="submit"
-          aria-label=" Submit password"
-          className="button"
-          title="Submit"
-        >
-          Submit
-        </button>
+          <button
+            type="submit"
+            aria-label=" Submit password"
+            className="button"
+            title="Submit"
+          >
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );

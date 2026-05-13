@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { BiShow, BiHide } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginRedux } from "../../redux/userSlice";
+import { signInLocal } from "../../utility/localDb";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -19,9 +20,6 @@ const SignIn = () => {
     password: "",
   });
   // console.log(data);
-  const userData = useSelector((state) => state);
-  console.log(userData.user);
-
   const dispatch = useDispatch();
 
   const enteredEmailIsValid = data.email.includes("@");
@@ -57,7 +55,6 @@ const SignIn = () => {
       };
     });
   };
-  console.log(process.env.REACT_APP_SERVER_DOMIN);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -66,20 +63,20 @@ const SignIn = () => {
 
     const { email, password } = data;
     if (email && password) {
-      const fetchData = await fetch(
-        `${process.env.REACT_APP_SERVER_DOMIN}/signin`,
-        {
+      let dataRes;
+      try {
+        const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/signin`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify(data),
-        }
-      );
+        });
+        dataRes = await fetchData.json();
+      } catch (error) {
+        dataRes = signInLocal(data);
+      }
 
-      const dataRes = await fetchData.json();
-
-      // alert(dataRes.message);
       toast(dataRes.message);
       if (dataRes.alert) {
         dispatch(loginRedux(dataRes));
@@ -87,7 +84,6 @@ const SignIn = () => {
           navigate("/");
         }, 1000);
       }
-      console.log(userData);
     } else {
       alert("Please Enter required fields");
     }

@@ -5,6 +5,7 @@ import { BiShow, BiHide } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import userIcon from "../../assets/user.png";
 import ImagetoBase from "../../utility/ImagetoBase";
+import { signUpLocal } from "../../utility/localDb";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -91,7 +92,6 @@ function SignUp() {
       };
     });
   };
-  console.log(process.env.REACT_APP_SERVER_DOMIN);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setEnteredFirstNameTouched(true);
@@ -103,20 +103,20 @@ function SignUp() {
     const { firstName, email, password, confirmPassword } = data;
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
-        const fetchData = await fetch(
-          `${process.env.REACT_APP_SERVER_DOMIN}/signup`,
-          {
+        let dataRes;
+        try {
+          const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/signup`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
             },
             body: JSON.stringify(data),
-          }
-        );
+          });
+          dataRes = await fetchData.json();
+        } catch (error) {
+          dataRes = signUpLocal(data);
+        }
 
-        const dataRes = await fetchData.json();
-
-        // alert(dataRes.message);
         toast(dataRes.message);
         if (dataRes.alert) {
           navigate("/Signin");
@@ -157,7 +157,6 @@ function SignUp() {
 
   const handlerUploadfile = async (e) => {
     const data = await ImagetoBase(e.target.files[0]);
-    console.log(data);
     setData((prev) => {
       return {
         ...prev,

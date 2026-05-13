@@ -5,9 +5,13 @@ import { useState } from "react";
 import UploadImage from "../../../assets/images.svg";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { createRentLocal, getRentsLocal } from "../../../utility/localDb";
+import { useDispatch } from "react-redux";
+import { setDataRent } from "../../../redux/rentSlice";
 
 const Rents = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -40,24 +44,26 @@ const Rents = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(data);
-
     const { name, email, price, mobile, location, description, image } = data;
     if (name && email && price && mobile && location && description && image) {
-      const fetchData = await fetch(
-        `${process.env.REACT_APP_SERVER_DOMIN}/uploadRent`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      const fetchRes = await fetchData.json();
-      console.log(fetchRes);
+      let fetchRes;
+      try {
+        const fetchData = await fetch(
+          `${process.env.REACT_APP_SERVER_DOMIN}/uploadRent`,
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+        fetchRes = await fetchData.json();
+      } catch (error) {
+        fetchRes = createRentLocal(data);
+      }
       toast(fetchRes.message);
+      dispatch(setDataRent(getRentsLocal()));
       setData(() => {
         return {
           name: "",
@@ -70,7 +76,7 @@ const Rents = () => {
         };
       });
       if (fetchRes.alert) {
-        navigate("/Rents");
+        navigate("/Rent");
       }
     } else {
       toast("Enter required fields");
@@ -84,7 +90,7 @@ const Rents = () => {
         <div className="container-box">
           <h2 className="heading__secondary">Post your house for rent</h2>
 
-          <form className="form-rent" onClick={submitHandler}>
+          <form className="form-rent" onSubmit={submitHandler}>
             <div className="flex-input">
               <input
                 type={"text"}
@@ -140,7 +146,9 @@ const Rents = () => {
             />
 
             <div className="rent-now">
-              <button className="rent-cta">Rent Now</button>
+              <button className="rent-cta" type="submit">
+                Rent Now
+              </button>
             </div>
           </form>
           <div className="pick-pic">

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useRef } from "react";
 
 import { FaTimes } from "react-icons/fa";
 import "./Filter.css";
@@ -13,63 +13,6 @@ const Filter = (props) => {
   const checkedBreakFast = useRef();
   const checkedAircondition = useRef();
 
-  const [wifi_Checkbox, setWifi_checkbox] = useState(false);
-  const [parking_Checbox, setParking_Checkox] = useState(false);
-  const [tv_Checkbox, setTv_Ckeckbox] = useState(false);
-  const [gym_Checkbox, setGym_Checkbox] = useState(false);
-  const [washer_Checkbox, setWasher_Checkbox] = useState(false);
-  const [kitchen_Checkbox, setKitchen_Checkbox] = useState(false);
-  const [BreakFast_Checkbox, setBreakFast_Checkbox] = useState(false);
-  const [Aircondition_Checkbox, setAircondition_Checkbox] = useState(false);
-
-  useEffect(() => {
-    if (CheckedWifi.current.checked) {
-      setWifi_checkbox(true);
-    } else {
-      setWifi_checkbox(false);
-    }
-
-    if (checkedParking.current.checked) {
-      setParking_Checkox(true);
-    } else {
-      setParking_Checkox(false);
-    }
-
-    if (checkedTv.current.checked) {
-      setTv_Ckeckbox(true);
-    } else {
-      setTv_Ckeckbox(false);
-    }
-
-    if (checkedGym.current.checked) {
-      setGym_Checkbox(true);
-    } else {
-      setGym_Checkbox(false);
-    }
-
-    if (checkedWasher.current.checked) {
-      setWasher_Checkbox(true);
-    } else {
-      setWasher_Checkbox(false);
-    }
-
-    if (checkedKitchen.current.checked) {
-      setKitchen_Checkbox(true);
-    } else {
-      setKitchen_Checkbox(false);
-    }
-
-    if (checkedKitchen.current.checked) {
-      setBreakFast_Checkbox(true);
-    } else {
-      setBreakFast_Checkbox(false);
-    }
-    if (checkedAircondition.current.checked) {
-      setAircondition_Checkbox(true);
-    } else {
-      setAircondition_Checkbox(false);
-    }
-  }, []);
   return (
     <Fragment>
       <div className={`backdrop-filter ${props.className}`}>

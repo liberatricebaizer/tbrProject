@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { FaArrowLeft, FaArrowRight, FaCamera, FaImage } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaCamera } from "react-icons/fa";
 import { MdUpload } from "react-icons/md";
 
 import "./Drivers.css";

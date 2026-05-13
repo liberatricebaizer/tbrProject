@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaFilter, FaSearch, FaStar } from "react-icons/fa";
 
-const RentCard = (name, email, price, mobile, location, description, image) => {
+const RentCard = ({ name, email, price, mobile, location, description, image }) => {
   return (
-    <div className="hotel" key={Math.random().toString()}>
+    <div className="hotel">
       <div className="hotel-img">
-        <img src={image} alt="Hotel 1" srcset="" />
+        <img src={image} alt={`${name}'s house`} />
       </div>
       <div className="hotel-info">
         <div className="hotel-info__heading">
@@ -25,7 +24,7 @@ const RentCard = (name, email, price, mobile, location, description, image) => {
             <div className="hotel-info__price">{price}</div>
           </div>
         </div>
-        <Link to={email} style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/RentForm" style={{ textDecoration: "none", color: "black" }}>
           <div className="hotel-info__cta">Rent Now</div>
         </Link>
       </div>

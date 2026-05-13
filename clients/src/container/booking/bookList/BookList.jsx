@@ -8,8 +8,14 @@ import Filter from "./Filter/Filters";
 import hotel4 from "../../../assets/img1.jpg";
 import hotel5 from "../../../assets/rent1.jpg";
 import { useState } from "react";
-import addBtn from "../../../assets/add.svg";
 import { FaCamera } from "react-icons/fa";
+import { toast } from "react-hot-toast";
+import ImagetoBase from "../../../utility/ImagetoBase";
+import {
+  createBookingLocal,
+  createHotelLocal,
+  getHotelsLocal,
+} from "../../../utility/localDb";
 // import hotel6 from "../../../assets/rent2.jpg";
 // import hotel7 from "../../../assets/rent3.jpg";
 // import hotel8 from "../../../assets/rent4.jpg";
@@ -85,6 +91,17 @@ const BookList = (props) => {
   const [washer, setWasher] = useState("");
   const [aircondition, setAircondition] = useState("");
   const [parking, setParking] = useState("");
+  const [postedHotels, setPostedHotels] = useState(getHotelsLocal());
+  const [hotelData, setHotelData] = useState({
+    ownName: "",
+    email: "",
+    price: "",
+    phone: "",
+    hotelName: "",
+    location: "",
+    description: "",
+    image: "",
+  });
   const FilterHiderHandler = useRef();
 
   const setFilter = () => {
@@ -139,7 +156,67 @@ const BookList = (props) => {
     aircondition,
     parking,
   ];
-  console.log(FilterItems[0].fields.includes(wifi));
+  const allHotels = [
+    ...postedHotels,
+    ...FilterItems.map((item, index) => ({ ...item, _id: `seed_${index}` })),
+  ];
+
+  const onBookHotel = (item) => {
+    createBookingLocal({
+      type: "hotel",
+      hotelName: item.hotelName,
+      ownName: item.ownName,
+      price: item.price,
+      location: item.location || "",
+    });
+    toast("Hotel booked successfully.");
+  };
+
+  const onHotelInput = (e) => {
+    const { name, value } = e.target;
+    setHotelData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const onHotelImage = async (e) => {
+    const image = await ImagetoBase(e.target.files[0]);
+    setHotelData((prev) => ({ ...prev, image }));
+  };
+
+  const submitHotelHandler = (e) => {
+    e.preventDefault();
+    const { ownName, email, price, phone, hotelName, location, description, image } =
+      hotelData;
+    if (!ownName || !email || !price || !phone || !hotelName || !location || !description) {
+      toast("Please fill all required hotel fields.");
+      return;
+    }
+    const result = createHotelLocal({
+      ownName,
+      email,
+      price: Number(price),
+      phone,
+      hotelName,
+      location,
+      description,
+      profile: image || hotel1,
+      type: "New",
+      date: new Date().toDateString(),
+      fields: [],
+    });
+    toast(result.message);
+    setPostedHotels(getHotelsLocal());
+    setHotelData({
+      ownName: "",
+      email: "",
+      price: "",
+      phone: "",
+      hotelName: "",
+      location: "",
+      description: "",
+      image: "",
+    });
+  };
+
   return (
     <Fragment>
       <Filter
@@ -179,7 +256,7 @@ const BookList = (props) => {
         </div>
         <div className="booking__content">
           <div className="booking__hotels">
-            {FilterItems.map((current_items) =>
+            {allHotels.map((current_items) =>
               searchQuerry
                 .toString()
                 .slice(0, searchQuerry.toString().length)
@@ -198,14 +275,13 @@ const BookList = (props) => {
                     className={`hotel ${
                       (minPrice.length > 0 && maxPrice.length) > 0 ? "hide" : ""
                     }`}
-                    key={Math.random().toString()}
+                    key={current_items._id || Math.random().toString()}
                     ref={FilterHiderHandler}
                   >
                     <div className="hotel-img">
                       <img
                         src={current_items.profile}
                         alt="Hotel 1"
-                        srcset=""
                       />
                     </div>
                     <div className="hotel-info">
@@ -229,7 +305,13 @@ const BookList = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div className="hotel-info__cta">Book Now</div>
+                      <button
+                        className="hotel-info__cta"
+                        type="button"
+                        onClick={() => onBookHotel(current_items)}
+                      >
+                        Book Now
+                      </button>
                     </div>
                   </div>
                 </Fragment>
@@ -237,7 +319,7 @@ const BookList = (props) => {
                 ""
               )
             )}
-            {FilterItems.map((bookItems) => (
+            {allHotels.map((bookItems) => (
               <Fragment>
                 {(Number(minPrice) <= bookItems.price &&
                   Number(maxPrice) >= bookItems.price) ||
@@ -250,9 +332,9 @@ const BookList = (props) => {
                 bookItems.fields.includes(fields[6]) ||
                 bookItems.fields.includes(fields[7]) ||
                 bookItems.fields.includes(fields[8]) ? (
-                  <div className="hotel" key={Math.random().toString()}>
+                  <div className="hotel" key={bookItems._id || Math.random().toString()}>
                     <div className="hotel-img">
-                      <img src={bookItems.profile} alt="Hotel 1" srcset="" />
+                      <img src={bookItems.profile} alt="Hotel 1" />
                     </div>
                     <div className="hotel-info">
                       <div className="hotel-info__heading">
@@ -275,7 +357,13 @@ const BookList = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div className="hotel-info__cta">Book Now</div>
+                      <button
+                        className="hotel-info__cta"
+                        type="button"
+                        onClick={() => onBookHotel(bookItems)}
+                      >
+                        Book Now
+                      </button>
                     </div>
                   </div>
                 ) : (
@@ -293,21 +381,41 @@ const BookList = (props) => {
         <div className="container-book">
           <div className="booking__add">
             <h2 className="heading__secondary">Post your Hotel to book</h2>
-            <form className="form-book">
+            <form className="form-book" onSubmit={submitHotelHandler}>
               <div className="flex-form">
                 <input
                   type="text"
                   className="input"
                   placeholder="Owner's name..."
+                  name="ownName"
+                  value={hotelData.ownName}
+                  onChange={onHotelInput}
                 />
-                <input type="text" className="input" placeholder="email" />
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="email"
+                  name="email"
+                  value={hotelData.email}
+                  onChange={onHotelInput}
+                />
               </div>
               <div className="flex-form">
-                <input type="number" className="input" placeholder="Price" />
+                <input
+                  type="number"
+                  className="input"
+                  placeholder="Price"
+                  name="price"
+                  value={hotelData.price}
+                  onChange={onHotelInput}
+                />
                 <input
                   type="number"
                   className="input"
                   placeholder="Phone number"
+                  name="phone"
+                  value={hotelData.phone}
+                  onChange={onHotelInput}
                 />
               </div>
               <div className="flex-form">
@@ -315,28 +423,39 @@ const BookList = (props) => {
                   type="text"
                   className="input"
                   placeholder="Hotel Title..."
+                  name="hotelName"
+                  value={hotelData.hotelName}
+                  onChange={onHotelInput}
                 />
                 <input
                   type="text"
                   className="input"
                   placeholder="Hotel Location..."
+                  name="location"
+                  value={hotelData.location}
+                  onChange={onHotelInput}
                 />
               </div>
               <textarea
                 type="text"
                 className="input flex-textarea"
                 placeholder="Brief description..."
+                name="description"
+                value={hotelData.description}
+                onChange={onHotelInput}
               />
 
               <div className="pick-pic">
                 <label className="label">
-                  <input type="file" />
+                  <input type="file" accept="image/*" onChange={onHotelImage} />
                   <FaCamera className="iconF" />
                 </label>
               </div>
 
               <div className="book-now">
-                <button className="book-cta">Book Now</button>
+                <button className="book-cta" type="submit">
+                  Book Now
+                </button>
               </div>
             </form>
           </div>

@@ -8,12 +8,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logoutRedux } from "../../redux/userSlice";
 import toast from "react-hot-toast";
+import { logoutCurrentUser } from "../../utility/localDb";
 const NavBar = () => {
   const [isMenuSubMenu, setIsMenuSubMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
   const userData = useSelector((state) => state.user);
-  console.log(userData.email);
 
   const dispatch = useDispatch();
 
@@ -37,10 +37,10 @@ const NavBar = () => {
   };
 
   const handlerLogout = () => {
+    logoutCurrentUser();
     dispatch(logoutRedux());
     toast("Logout successfully");
   };
-  console.log(process.env.REACT_APP_ADMIN_EMAIL);
 
   return (
     <div className="header">
@@ -77,6 +77,11 @@ const NavBar = () => {
           <li>
             <NavLink to="/Help" className="navlink">
               Help
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/Admin" className="navlink">
+              Admin
             </NavLink>
           </li>
           <li>
@@ -175,9 +180,8 @@ const NavBar = () => {
                     <NavLink
                       to="/Home"
                       className="navlink-mob"
-                      activeClassName="active"
                     >
-                      <pan className="navlink__home">Home</pan>
+                      <span className="navlink__home">Home</span>
                     </NavLink>
                   </li>
 
@@ -226,20 +230,17 @@ const NavBar = () => {
                     ) : null}
                   </li>
                   <li>
-                    <NavLink
-                      to="/Help"
-                      className="navlink-mob"
-                      activeClassName="active"
-                    >
+                    <NavLink to="/Help" className="navlink-mob">
                       Help
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink
-                      to="/About us"
-                      className="navlink-mob"
-                      activeClassName="active"
-                    >
+                    <NavLink to="/Admin" className="navlink-mob">
+                      Admin
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/About us" className="navlink-mob">
                       About us
                     </NavLink>
                   </li>

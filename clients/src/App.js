@@ -7,25 +7,33 @@ import HouseProfile from "./container/Rent/RentList/HousesProfiles/House1/HouseP
 import Driver from "./pages/Driver";
 import ForgotPassword from "./pages/ForgotPassword";
 import RentForm from "./pages/RentForm";
-import toast, { Toaster } from "react-hot-toast";
+import AdminDashboard from "./pages/AdminDashboard";
+import { Toaster } from "react-hot-toast";
 import { Fragment } from "react";
 import { useEffect } from "react";
 import { setDataRent } from "./redux/rentSlice";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { loginRedux } from "./redux/userSlice";
+import { getCurrentUser, getRentsLocal } from "./utility/localDb";
 
 function App() {
   const dispatch = useDispatch();
-  const rentData = useSelector((state) => state.rent);
-  console.log(rentData);
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/rent`);
-      const resData = await res.json();
-      console.log(resData);
-      dispatch(setDataRent(resData));
+      try {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/rent`);
+        const resData = await res.json();
+        dispatch(setDataRent(Array.isArray(resData) ? resData : []));
+      } catch (error) {
+        dispatch(setDataRent(getRentsLocal()));
+      }
     })();
-  }, []);
+
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+      dispatch(loginRedux({ data: currentUser }));
+    }
+  }, [dispatch]);
   return (
     <Fragment>
       <Toaster />
@@ -57,6 +65,8 @@ function App() {
             <Route path={"/RentForm"} element={<RentForm />} />
 
             <Route path={"/Driver"} element={<Driver />} />
+
+            <Route path={"/Admin"} element={<AdminDashboard />} />
 
             <Route path={"/HousesProfiles/House1"} element={<HouseProfile />} />
 
