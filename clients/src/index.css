@@ -27,7 +27,7 @@ body {
 
 .grid {
   display: grid;
-  gap: 6.4rem;
+  gap: 2rem;
 }
 .grid__2__cols {
   grid-template-columns: repeat(2, 1fr);

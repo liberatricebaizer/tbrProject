@@ -1,26 +1,42 @@
 import React from "react";
 
+const C = {
+  primary:   "#20c997",
+  primaryDk: "#168d6a",
+  primaryLt: "#d7f5ec",
+  text:      "#343a40",
+  textMuted: "#6c757d",
+  textLight: "#adb5bd",
+  surface:   "#ffffff",
+  border:    "#e9ecef",
+  borderSoft:"#f8f9fa",
+};
+
 const TableComponent = ({ title, headers, rows, emptyText, badge }) => (
   <div style={{
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(255,255,255,0.07)",
-    borderRadius: 16,
+    background: C.surface,
+    border: `1px solid ${C.border}`,
+    borderRadius: 12,
     overflow: "hidden",
-    marginBottom: 24,
+    marginBottom: 20,
+    boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
   }}>
-    {/* Header */}
+    {/* Header bar */}
     <div style={{
-      padding: "18px 24px",
-      borderBottom: "1px solid rgba(255,255,255,0.07)",
+      padding: "16px 20px",
+      borderBottom: `1px solid ${C.border}`,
       display: "flex", alignItems: "center", justifyContent: "space-between",
+      background: C.surface,
     }}>
-      <h2 style={{ color: "#f1f5f9", fontWeight: 700, fontSize: 16, margin: 0 }}>{title}</h2>
+      <h2 style={{ color: C.text, fontWeight: 700, fontSize: 15, margin: 0 }}>{title}</h2>
       {badge && (
         <span style={{
-          fontSize: 12, fontWeight: 700, padding: "4px 12px",
-          background: "rgba(99,102,241,0.18)", color: "#a5b4fc",
-          borderRadius: 20, border: "1px solid rgba(99,102,241,0.3)",
-        }}>{badge}</span>
+          fontSize: 12, fontWeight: 700, padding: "3px 12px",
+          background: C.primaryLt, color: C.primaryDk,
+          borderRadius: 20, border: `1px solid ${C.primary}40`,
+        }}>
+          {badge}
+        </span>
       )}
     </div>
 
@@ -28,13 +44,13 @@ const TableComponent = ({ title, headers, rows, emptyText, badge }) => (
     <div style={{ overflowX: "auto" }}>
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
-          <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+          <tr style={{ background: C.borderSoft }}>
             {headers.map((h) => (
               <th key={h} style={{
-                padding: "12px 20px", textAlign: "left",
-                color: "#64748b", fontSize: 11, fontWeight: 700,
-                textTransform: "uppercase", letterSpacing: "0.08em",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                padding: "11px 18px", textAlign: "left",
+                color: C.textMuted, fontSize: 11, fontWeight: 700,
+                textTransform: "uppercase", letterSpacing: "0.07em",
+                borderBottom: `1px solid ${C.border}`,
                 whiteSpace: "nowrap",
               }}>
                 {h}
@@ -47,9 +63,9 @@ const TableComponent = ({ title, headers, rows, emptyText, badge }) => (
             <tr>
               <td colSpan={headers.length} style={{
                 padding: "48px 24px", textAlign: "center",
-                color: "#475569", fontSize: 14,
+                color: C.textLight, fontSize: 14,
               }}>
-                <div style={{ fontSize: 32, marginBottom: 8 }}>📭</div>
+                <div style={{ fontSize: 30, marginBottom: 8 }}>📭</div>
                 {emptyText}
               </td>
             </tr>

@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { HomeBar, NavBar, SignIn, SignUp, Support } from "./components";
 import { Booking, TakeRide } from "./container";
 import Slider from "./container/about/Slider";
@@ -7,7 +7,9 @@ import HouseProfile from "./container/Rent/RentList/HousesProfiles/House1/HouseP
 import Driver from "./pages/Driver";
 import ForgotPassword from "./pages/ForgotPassword";
 import RentForm from "./pages/RentForm";
-import AdminDashboard from "./pages/AdminDashboard";
+import DashboardLayout from "./dashboard/DashboardLayout";
+import Overview from "./dashboard/shared/Overview";
+import AllBookings from "./dashboard/booking/AllBookings";
 import { Toaster } from "react-hot-toast";
 import { Fragment } from "react";
 import { useEffect } from "react";
@@ -18,6 +20,9 @@ import { getCurrentUser, getRentsLocal } from "./utility/localDb";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const isAdminPath = location.pathname.startsWith("/Admin");
+
   useEffect(() => {
     (async () => {
       try {
@@ -38,9 +43,9 @@ function App() {
     <Fragment>
       <Toaster />
 
-      <div>
-        <NavBar />
-        <main>
+      <div className={isAdminPath ? "h-screen overflow-hidden" : ""}>
+        {!isAdminPath && <NavBar />}
+        <main className={isAdminPath ? "h-screen overflow-hidden" : ""}>
           <Routes>
             <Route path={"/"} element={<Navigate to={"/Home"} />} />
 
@@ -66,7 +71,25 @@ function App() {
 
             <Route path={"/Driver"} element={<Driver />} />
 
-            <Route path={"/Admin"} element={<AdminDashboard />} />
+            {/* Admin Dashboard Nested Routes */}
+            <Route path={"/Admin"} element={<DashboardLayout />}>
+              <Route index element={<Overview />} />
+              <Route path="analytics" element={<div className="p-8">Analytics Page (Coming Soon)</div>} />
+              <Route path="reports" element={<div className="p-8">Reports Page (Coming Soon)</div>} />
+              <Route path="history" element={<div className="p-8">History Page (Coming Soon)</div>} />
+              
+              <Route path="booking/all" element={<AllBookings />} />
+              <Route path="booking/reservations" element={<div className="p-8">Reservations (Coming Soon)</div>} />
+              <Route path="booking/calendar" element={<div className="p-8">Booking Calendar (Coming Soon)</div>} />
+              <Route path="booking/customers" element={<div className="p-8">Customers (Coming Soon)</div>} />
+              <Route path="booking/refunds" element={<div className="p-8">Refund Requests (Coming Soon)</div>} />
+              <Route path="booking/payments" element={<div className="p-8">Booking Payments (Coming Soon)</div>} />
+
+              <Route path="renting/*" element={<div className="p-8">Renting Management (Coming Soon)</div>} />
+              <Route path="travelling/*" element={<div className="p-8">Travelling Management (Coming Soon)</div>} />
+              <Route path="communication/*" element={<div className="p-8">Communication (Coming Soon)</div>} />
+              <Route path="system/*" element={<div className="p-8">System Settings (Coming Soon)</div>} />
+            </Route>
 
             <Route path={"/HousesProfiles/House1"} element={<HouseProfile />} />
 

@@ -79,11 +79,13 @@ const NavBar = () => {
               Help
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/Admin" className="navlink">
-              Admin
-            </NavLink>
-          </li>
+          {userData.email === process.env.REACT_APP_ADMIN_EMAIL && (
+            <li>
+              <NavLink to="/Admin" className="navlink">
+                Admin
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink to="/About us" className="navlink">
               About us
@@ -234,11 +236,13 @@ const NavBar = () => {
                       Help
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink to="/Admin" className="navlink-mob">
-                      Admin
-                    </NavLink>
-                  </li>
+                  {userData.email === process.env.REACT_APP_ADMIN_EMAIL && (
+                    <li>
+                      <NavLink to="/Admin" className="navlink-mob">
+                        Admin
+                      </NavLink>
+                    </li>
+                  )}
                   <li>
                     <NavLink to="/About us" className="navlink-mob">
                       About us
