@@ -7,6 +7,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 ::selection {
   background-color: #20c997;
 }
@@ -14,6 +15,7 @@
 html {
   font-size: 62.5%;
 }
+
 body {
   font-family: "Rubik", sans-serif;
   color: #343a40;
@@ -29,9 +31,11 @@ body {
   display: grid;
   gap: 2rem;
 }
+
 .grid__2__cols {
   grid-template-columns: repeat(2, 1fr);
 }
+
 .grid__3__cols {
   grid-template-columns: repeat(3, 1fr);
 }

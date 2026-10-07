@@ -1,4 +1,4 @@
-.booking {
+/* .booking {
   padding: 4rem;
   width: 100%;
   position: relative;
@@ -7,10 +7,8 @@
 .booking__search {
   max-width: 1150px;
   margin: 0 auto;
-  /* padding: 0 8rem; */
   display: flex;
   justify-content: center;
-  /* border: #20c997 1px solid; */
 }
 
 .filter {
@@ -53,7 +51,6 @@
   cursor: pointer;
 }
 
-/**********************/
 .booking__content {
   padding: 8rem;
 }
@@ -68,28 +65,7 @@
     padding: 2rem 0 !important;
   }
 }
-/*
-.booking__hotel--current {
-  display: flex;
-}
 
-.img-hotel {
-  flex: 50%;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.img-hotel img {
-  width: 100%;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-
-.information-hotel {
-  flex: 50%;
-  padding: 2rem;
-} 
-*/
 
 .hotel {
   width: 40rem;
@@ -101,8 +77,6 @@
   gap: 2rem;
 }
 .hotel {
-  /* border: 1px solid #777; */
-  /* border: 1px solid #20c997; */
   border-radius: 0.5rem;
   box-shadow: 0 0 2rem #e8e8e8;
   overflow: hidden;
@@ -129,12 +103,7 @@
 .hotel-info__heading .heading__tertiary {
   margin: 0;
 }
-/* .hotel-info__heading {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-} */
+
 .highlighted {
   color: #20c997;
 }
@@ -142,7 +111,6 @@
   font-size: 1.2rem;
 }
 
-/**************************/
 .hotel-info__content {
   margin-top: 2rem;
 }
@@ -198,7 +166,6 @@
 .hide {
   display: none;
 }
-/* Add Btn */
 .add-btn {
   position: absolute;
   right: 4rem;
@@ -230,7 +197,6 @@
   background: #e2fff6;
 }
 
-/* Form */
 .container-book {
   position: fixed;
   inset: 0;
@@ -324,4 +290,4 @@ textarea {
 }
 .label .iconF {
   cursor: pointer;
-}
+} */
