@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# Serve index.html for all routes so React Router can handle client-side paths
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

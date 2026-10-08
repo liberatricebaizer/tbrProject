@@ -101,7 +101,7 @@ const Lightbox = ({ images, start, onClose }) => {
       <button type="button" aria-label="Previous photo" onClick={prev} className={`${btn} left-4`}>
         <FaChevronLeft />
       </button>
-      <img src={images[i]} alt={`Photo ${i + 1} of ${images.length}`} className="max-h-[85vh] max-w-full rounded-2xl object-contain" />
+      <img src={images[i]} alt={`House view ${i + 1} of ${images.length}`} className="max-h-[85vh] max-w-full rounded-2xl object-contain" />
       <button type="button" aria-label="Next photo" onClick={next} className={`${btn} right-4`}>
         <FaChevronRight />
       </button>
